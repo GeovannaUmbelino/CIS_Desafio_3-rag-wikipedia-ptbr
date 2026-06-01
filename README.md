@@ -36,12 +36,19 @@ O ambiente principal de desenvolvimento foi o **Google Colab** (GPU T4), utiliza
 
 ---
 
-## 📊 Exemplo de Comparativo (RAG vs No-RAG)
+## 📊 Análise Qualitativa
 
-Durante a avaliação, testamos a pergunta: *"Quem foi Dom Pedro II?"*
+### 1. Comparativo de Respostas (RAG vs No-RAG)
+Durante a avaliação, testamos a pergunta: **"Quem foi Dom Pedro II?"**
 
-* **Sem RAG (Closed-book):** O modelo fornece uma resposta genérica ou imprecisa por não possuir conhecimento.
+* **Sem RAG (Closed-book):** O modelo fornece uma resposta genérica, imprecisa ou em outro idioma por não possuir o conhecimento consolidado em seus pesos.
 * **Com RAG:** O modelo retorna uma resposta historicamente correta e rica em detalhes, embasada exclusivamente nos textos recuperados da Wikipedia através da busca vetorial.
+
+### 2. Impacto do Tamanho do Chunk
+Durante os testes, observou-se que alterar o tamanho dos chunks (ex: 128 vs 256 vs 512 tokens) afeta diretamente a recuperação:
+
+* **Chunks menores (ex: 128):** Trazem trechos muito específicos, mas correm o risco de perder o contexto geral da frase, prejudicando a formulação da resposta do LLM.
+* **Chunks maiores (ex: 512):** Garantem que o LLM receba uma ideia completa, mas podem diluir a relevância da busca vetorial no FAISS, trazendo informações desnecessárias na mesma janela de contexto. O tamanho de 256 com overlap de 30 provou ser um meio-termo ideal para este projeto.
 
 ---
 
